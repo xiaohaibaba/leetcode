@@ -1,5 +1,7 @@
 package com.lhy.sf;
 
+import java.util.Arrays;
+
 public class ArrayList {
     /**
      * 所有的元素
@@ -64,6 +66,8 @@ public class ArrayList {
      * @param element
      */
     public void add(int element) {
+        // 判断容量是否足够
+        elements[size++] = element;
     }
 
     /**
@@ -72,9 +76,7 @@ public class ArrayList {
      * @return
      */
     public int get(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index:" + index + ",Size:" + size);
-        }
+        rangeCheck(index);
         return elements[index];
     }
 
@@ -85,9 +87,7 @@ public class ArrayList {
      * @return 原来的元素ֵ
      */
     public int set(int index, int element) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index:" + index + ",Size:" + size);
-        }
+        rangeCheck(index);
         int old = elements[index];
         elements[index] = element;
         return old;
@@ -99,8 +99,25 @@ public class ArrayList {
      * @param element
      */
     public void add(int index, int element) {
-
+        rangeCheckForAdd(index);
+        for (int i = size-1; i >= index; i--) {
+            elements[i+1] = elements[i];
+        }
+        elements[index] = element;
+        size++;
     }
+
+    private void rangeCheck(int index) {
+        outOfBounds(index);
+    }
+    private void rangeCheckForAdd(int index) {
+        outOfBounds(index);
+    }
+
+    private void outOfBounds(int index) {
+        throw new IndexOutOfBoundsException("Index:" + index + ",Size:" + size);
+    }
+
 
     /**
      * 删除index位置的元素
@@ -108,8 +125,13 @@ public class ArrayList {
      * @return
      */
     public int remove(int index) {
-
-        return 0;
+        rangeCheck(index);
+        int old = elements[index];
+        for (int i = index + 1; i <= size - 1; i++) {
+            elements[i-1] = elements[i];
+        }
+        size--;
+        return old;
     }
 
     /**
@@ -122,5 +144,19 @@ public class ArrayList {
             if(elements[i]==element) return i;
         }
         return ELEMENT_NOT_FOUND;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("size=").append(size).append(", [");
+        for (int i = 0; i < size; i++) {
+            if (i !=0) {
+                sb.append(", ");
+            }
+            sb.append(elements[i]);
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }
