@@ -66,8 +66,7 @@ public class ArrayList {
      * @param element
      */
     public void add(int element) {
-        // 判断容量是否足够
-        elements[size++] = element;
+        add(size, element);
     }
 
     /**
@@ -100,6 +99,9 @@ public class ArrayList {
      */
     public void add(int index, int element) {
         rangeCheckForAdd(index);
+
+        ensureCapacity(size + 1);
+
         for (int i = size-1; i >= index; i--) {
             elements[i+1] = elements[i];
         }
@@ -107,11 +109,36 @@ public class ArrayList {
         size++;
     }
 
-    private void rangeCheck(int index) {
-        outOfBounds(index);
+    /**
+     * 确保有capacity容量
+     * @param capacity
+     */
+    private void ensureCapacity(int capacity) {
+        int oldCapacity = elements.length;
+        if (oldCapacity >= capacity) return;
+
+
+        // 新容量为就容量的1.5倍
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        int[] newElements = new int[newCapacity];
+        for (int i = 0; i < size; i++) {
+            newElements[i] = elements[i];
+        }
+        System.out.println("扩容"+oldCapacity+"--"+newCapacity);
+        elements = newElements;
+
     }
+
+    private void rangeCheck(int index) {
+        if (index < 0 || index >= size) {
+            outOfBounds(index);
+        }
+    }
+
     private void rangeCheckForAdd(int index) {
-        outOfBounds(index);
+        if (index < 0 || index > size) {
+            outOfBounds(index);
+        }
     }
 
     private void outOfBounds(int index) {
