@@ -31,6 +31,9 @@ public class ArrayList<E> {
      * 清除所有元素
      */
     public void clear() {
+        for (int i = 0; i < size; i++) {
+            elements[i] = null;
+        }
         size = 0;
     }
 
@@ -152,10 +155,10 @@ public class ArrayList<E> {
     public E remove(int index) {
         rangeCheck(index);
         E old = elements[index];
-        for (int i = index + 1; i <= size - 1; i++) {
-            elements[i-1] = elements[i];
+        for (int i = size; i > index; i-- ) {
+            elements[i] = elements[i - 1];
         }
-        size--;
+        elements[--size] = null;
         return old;
     }
 
@@ -165,9 +168,17 @@ public class ArrayList<E> {
      * @return
      */
     public int indexOf(E element) {
-        for (int i = 0; i < size; i++) {
-            if(elements[i]==element) return i;
+        if (element != null) {
+            for (int i = 0; i < size; i++) {
+                if(elements[i]==null) return i;
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if(element.equals(elements[i])) return i;
+            }
+
         }
+
         return ELEMENT_NOT_FOUND;
     }
 
