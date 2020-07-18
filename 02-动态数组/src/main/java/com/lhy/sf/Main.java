@@ -3,22 +3,20 @@ package com.lhy.sf;
 public class Main {
 
     public static void main(String[] args) {
-        ArrayList list = new ArrayList();
-        list.add(0);
-        list.add(3);
-        list.add(1);
-        list.add(2);
-        list.add(13);
-        list.add(13);
-        list.add(13);
-        list.add(13);
-        list.add(13);
-        list.add(13);
-        list.add(13);
-        list.add(0,1);
-        for (int i = 0; i < 100000; i++) {
-            list.add(i);
-        }
+        ArrayList<Person> list = new ArrayList();
+        list.add(new Person("1231"));
+        list.add(new Person("1232"));
+        list.add(new Person("1233"));
+        list.add(new Person("1234"));
+        list.add(new Person("1235"));
+        list.add(new Person("1236"));
+        list.add(new Person("1237"));
+        list.add(new Person("1238"));
+        list.add(new Person("1239"));
+        list.add(new Person("12300"));
+        list.add(new Person("12301"));
+        list.add(new Person("12302"));
+        list.add(new Person("12303"));
         System.out.println(list.toString());
     }
 }
