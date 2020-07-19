@@ -1,6 +1,6 @@
 package com.lhy.sf;
 
-public class ArrayList<E> {
+public class ArrayList<E> extends AbstractList<E> {
     /**
      * 所有的元素
      */
@@ -12,10 +12,7 @@ public class ArrayList<E> {
     private static final int DEFAULT_CAPACITY = 10;
 
     private static final int ELEMENT_NOT_FOUND = -1;
-    /**
-     * 元素的数量
-     */
-    private int size;
+
 
     public ArrayList() {
         this(DEFAULT_CAPACITY);
@@ -60,14 +57,6 @@ public class ArrayList<E> {
      */
     public boolean contains(E element) {
         return indexOf(element) != ELEMENT_NOT_FOUND;
-    }
-
-    /**
-     * 添加元素到尾部
-     * @param element
-     */
-    public void add(E element) {
-        add(size, element);
     }
 
     /**
@@ -118,7 +107,6 @@ public class ArrayList<E> {
         int oldCapacity = elements.length;
         if (oldCapacity >= capacity) return;
 
-
         // 新容量为就容量的1.5倍
         int newCapacity = oldCapacity + (oldCapacity >> 1);
         E[] newElements = (E[]) new Object[newCapacity];
@@ -129,23 +117,6 @@ public class ArrayList<E> {
         elements = newElements;
 
     }
-
-    private void rangeCheck(int index) {
-        if (index < 0 || index >= size) {
-            outOfBounds(index);
-        }
-    }
-
-    private void rangeCheckForAdd(int index) {
-        if (index < 0 || index > size) {
-            outOfBounds(index);
-        }
-    }
-
-    private void outOfBounds(int index) {
-        throw new IndexOutOfBoundsException("Index:" + index + ",Size:" + size);
-    }
-
 
     /**
      * 删除index位置的元素
