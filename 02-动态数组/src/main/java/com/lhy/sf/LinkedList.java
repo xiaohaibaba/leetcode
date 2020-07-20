@@ -61,11 +61,33 @@ public class LinkedList<E> extends AbstractList<E> {
     }
 
     public E remove(int index) {
-        return null;
+        Node<E> old = first;
+        if (index == 0) {
+            first = first.next;
+        } else {
+            Node<E> prev = node(index - 1).next;
+            old = prev.next;
+            prev.next = old.next;
+        }
+        size--;
+        return old.element;
     }
 
     public int indexOf(E element) {
-        return 0;
+        Node<E> node = first;
+        if (element != null) {
+            for (int i = 0; i < size; i++) {
+                if(node.element==null) return i;
+                node = node.next;
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if(element.equals(node.element)) return i;
+                node = node.next;
+            }
+        }
+
+        return ELEMENT_NOT_FOUND;
     }
 
     private static class Node<E> {
@@ -78,4 +100,23 @@ public class LinkedList<E> extends AbstractList<E> {
         }
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("size=").append(size).append(", [");
+        Node<E> node = first;
+        for (int i = 0; i < size; i++) {
+            if (i !=0) {
+                sb.append(", ");
+            }
+            sb.append(node.element);
+            node = node.next;
+        }
+
+//        while (node.next != null) {
+//            node = node.next;
+//        }
+        sb.append("]");
+        return sb.toString();
+    }
 }
