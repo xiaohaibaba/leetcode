@@ -22,4 +22,23 @@ public class _206_反转链表 {
 
         return newHead;
     }
+
+    /**
+     * 非递归
+     * @param head
+     * @return
+     */
+    public ListNode reverseList2(ListNode head) {
+        if (head == null || head.next == null) return head;
+
+        ListNode newHead = null;
+
+        while (head != null) {
+            ListNode tem = head.next;
+            newHead = head;
+            head = tem;
+        }
+
+        return newHead;
+    }
 }
