@@ -1,12 +1,14 @@
-package com.lhy.sf;
+package com.lhy.sf.single;
 
-public class LinkedList<E> extends AbstractList<E> {
+import com.lhy.sf.AbstractList;
 
-    // 头结点
+/**
+ * 单向链表
+ * @param <E>
+ */
+public class SingleLinkedList<E> extends AbstractList<E> {
+
     private Node<E> first;
-
-    // 尾节点
-    private Node<E> last;
 
     public void clear() {
         first = null;
@@ -57,19 +59,11 @@ public class LinkedList<E> extends AbstractList<E> {
      */
     private Node<E> node(int index) {
         rangeCheck(index);
-        if (index < (size >> 1)) {
-            Node<E> node = first;
-            for (int i = 0; i < index; i++) {
-                node = node.next;
-            }
-            return node;
-        }else{
-            Node<E> node = last;
-            for (int i = size - 1; i > index; i--) {
-                node = node.prev;
-            }
-            return node;
+        Node<E> node = first;
+        for (int i = 0; i < index; i++) {
+            node = node.next;
         }
+        return node;
     }
 
     public E remove(int index) {
@@ -105,12 +99,10 @@ public class LinkedList<E> extends AbstractList<E> {
 
     private static class Node<E> {
         E element;
-        Node<E> prev;
         Node<E> next;
 
-        public Node(E element, Node<E> prev, Node<E> next) {
+        public Node(E element, Node<E> next) {
             this.element = element;
-            this.prev = prev;
             this.next = next;
         }
     }

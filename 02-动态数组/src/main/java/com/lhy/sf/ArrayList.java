@@ -130,6 +130,7 @@ public class ArrayList<E> extends AbstractList<E> {
             elements[i] = elements[i - 1];
         }
         elements[--size] = null;
+        trim();
         return old;
     }
 
@@ -151,6 +152,19 @@ public class ArrayList<E> extends AbstractList<E> {
         }
 
         return ELEMENT_NOT_FOUND;
+    }
+
+    private void trim(){
+        int oldCapacity = elements.length;
+        int newCapacity = oldCapacity >> 1;
+        if (size >= newCapacity || oldCapacity <= DEFAULT_CAPACITY) return;
+
+        E[] newElements = (E[]) new Object[newCapacity];
+        for (int i = 0; i < size; i++) {
+            newElements[i] = elements[i];
+        }
+        System.out.println("缩容"+oldCapacity+"--"+newCapacity);
+        elements = newElements;
     }
 
     @Override
