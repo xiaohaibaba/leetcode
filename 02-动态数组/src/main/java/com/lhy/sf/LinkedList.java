@@ -1,7 +1,5 @@
 package com.lhy.sf;
 
-import java.lang.annotation.AnnotationTypeMismatchException;
-
 public class LinkedList<E> extends AbstractList<E> {
 
     // 头结点
