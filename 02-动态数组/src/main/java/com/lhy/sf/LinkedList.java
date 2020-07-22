@@ -89,16 +89,22 @@ public class LinkedList<E> extends AbstractList<E> {
 
     public E remove(int index) {
         rangeCheck(index);
-        Node<E> old = first;
-        if (index == 0) {
-            first = first.next;
+        Node<E> node = node(index);
+        Node<E> prev = node.prev;
+        Node<E> next = node.next;
+        if (prev == null) {
+            first = next;
+        }else {
+            prev.next = next;
+        }
+
+        if (next == null) {
+            last = prev;
         } else {
-            Node<E> prev = node(index - 1).next;
-            old = prev.next;
-            prev.next = old.next;
+            next.prev = prev;
         }
         size--;
-        return old.element;
+        return node.element;
     }
 
     public int indexOf(E element) {
@@ -127,6 +133,18 @@ public class LinkedList<E> extends AbstractList<E> {
             this.element = element;
             this.prev = prev;
             this.next = next;
+        }
+
+        public String toString(){
+            StringBuffer sb = new StringBuffer();
+            if (prev != null) {
+                sb.append(prev.element);
+            }
+            sb.append("_").append(element).append("_");
+            if (next != null) {
+                sb.append(next.element);
+            }
+            return sb.toString();
         }
     }
 
