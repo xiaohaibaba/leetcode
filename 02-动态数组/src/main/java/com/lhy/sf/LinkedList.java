@@ -1,5 +1,7 @@
 package com.lhy.sf;
 
+import java.lang.annotation.AnnotationTypeMismatchException;
+
 public class LinkedList<E> extends AbstractList<E> {
 
     // 头结点
@@ -10,6 +12,7 @@ public class LinkedList<E> extends AbstractList<E> {
 
     public void clear() {
         first = null;
+        last = null;
         size = 0;
     }
 
@@ -38,14 +41,28 @@ public class LinkedList<E> extends AbstractList<E> {
 
     public void add(int index, E element) {
         rangeCheckForAdd(index);
-
-        if (index == 0) {
-            first = new Node<E>(element, first);
+        if (index == size) { // 往最后添加
+            Node<E> oldLast = last.prev;
+            last = new Node<E>(element, last, null);
+            if (oldLast == null) {
+                first = last;
+            }else {
+                oldLast.next = last;
+            }
         } else {
-            // 获取当前索引位置的前一个node
-            Node<E> prev = node(index - 1);
-            prev.next = new Node<E>(element,prev.next);
+            Node<E> next = node(index);
+            Node<E> prev = next.prev;
+            Node<E> newNode = new Node<E>(element, prev, next);
+            prev.next = newNode;
+            if (next != null) {
+                next.prev = newNode;
+            } else {
+                last = newNode;
+            }
         }
+
+
+
 
         size++;
     }
